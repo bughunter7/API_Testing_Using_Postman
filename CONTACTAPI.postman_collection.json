@@ -1,0 +1,468 @@
+{
+	"info": {
+		"_postman_id": "45ac6044-b20f-42f6-ba77-be8592051280",
+		"name": "CONTACTAPI",
+		"description": "This API demonstrates API testing using postman\nGiven collection has two sub-folder\n1.Basic Test - test which helps in performing get , update , delete operations.\n\n2.Negative Test - includes negative test cases for API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "BasicTest",
+			"item": [
+				{
+					"name": "GetContactList",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{baseurl}}",
+							"protocol": "http",
+							"host": [
+								"{{baseurl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateContact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData=pm.response.json();\r",
+									"pm.environment.set(\"contactID\",jsonData._id);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"{{firstname}}\",\r\n    \"lastName\": \"{{lastname}}\",\r\n    \"email\": \"asmith@thinkingtester.com\",\r\n    \"location\": {\r\n        \"city\": \"{{city}}\",\r\n        \"country\": \"USA\"\r\n    },\r\n    \"employer\": {\r\n    \t\"jobTitle\": \"Software Tester\",\r\n    \t\"company\": \"Microsoft\"\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "http://{{baseurl}}",
+							"protocol": "http",
+							"host": [
+								"{{baseurl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCreatedContact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Should include the text\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Shubham\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\",\"application/json; charset=utf-8\");\r",
+									"});\r",
+									"\r",
+									" var jsonData = pm.response.json();\r",
+									"pm.test(\"verify first name\", function () {\r",
+									"   \r",
+									"    pm.expect(jsonData.firstName).to.eql(environment.firstname);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"verify last name\", function () {\r",
+									"   \r",
+									"    pm.expect(jsonData.lastName).to.eql(environment.lastname);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"verify city\", function () {\r",
+									"   \r",
+									"    pm.expect(jsonData.location.city).to.eql(environment.city);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://3.13.86.142:3000/contacts/{{contactID}}",
+							"protocol": "http",
+							"host": [
+								"3",
+								"13",
+								"86",
+								"142"
+							],
+							"port": "3000",
+							"path": [
+								"contacts",
+								"{{contactID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateContact",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Shubham\",\r\n    \"lastName\": \"Parab\",\r\n    \"email\": \"rhill@fake.com\",\r\n    \"location\": {\r\n        \"city\": \"London\",\r\n        \"country\": \"UK\"\r\n    },\r\n    \"employer\": {\r\n    \t\"jobTitle\": \"QA Lead\",\r\n    \t\"company\": \"TCS-USA\"\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "http://3.13.86.142:3000/contacts/{{contactID}}",
+							"protocol": "http",
+							"host": [
+								"3",
+								"13",
+								"86",
+								"142"
+							],
+							"port": "3000",
+							"path": [
+								"contacts",
+								"{{contactID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteContact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Shubham\",\r\n    \"lastName\": \"Parab\",\r\n    \"email\": \"rhill@fake.com\",\r\n    \"location\": {\r\n        \"city\": \"London\",\r\n        \"country\": \"UK\"\r\n    },\r\n    \"employer\": {\r\n    \t\"jobTitle\": \"QA Lead\",\r\n    \t\"company\": \"TCS\"\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "http://3.13.86.142:3000/contacts/604355ac170734047658f37e",
+							"protocol": "http",
+							"host": [
+								"3",
+								"13",
+								"86",
+								"142"
+							],
+							"port": "3000",
+							"path": [
+								"contacts",
+								"604355ac170734047658f37e"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Basic request which gets the contact list\r\ncreates the contact and allows to perform get , put , delete on the request.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "NegativeTest",
+			"item": [
+				{
+					"name": "Recordnotfound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://3.13.86.142:3000/contacts/404",
+							"protocol": "http",
+							"host": [
+								"3",
+								"13",
+								"86",
+								"142"
+							],
+							"port": "3000",
+							"path": [
+								"contacts",
+								"404"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Requestsendwithoutrequiredinfo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Shubam\",\r\n    \"lastName\": \"Smith\",\r\n    \"email\": \"\",\r\n    \"location\": {\r\n        \"city\": \"Boston, MA\",\r\n        \"country\": \"USA\"\r\n    },\r\n    \"employer\": {\r\n    \t\"jobTitle\": \"Software Tester\",\r\n    \t\"company\": \"Microsoft\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://3.13.86.142:3000/contacts",
+							"protocol": "http",
+							"host": [
+								"3",
+								"13",
+								"86",
+								"142"
+							],
+							"port": "3000",
+							"path": [
+								"contacts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Requesthavingtoomanycharacters",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Shubammmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm\",\r\n    \"lastName\": \"Smith\",\r\n    \"email\": \"asmith@thinkingtester.com\",\r\n    \"location\": {\r\n        \"city\": \"Boston, MA\",\r\n        \"country\": \"USA\"\r\n    },\r\n    \"employer\": {\r\n    \t\"jobTitle\": \"Software Tester\",\r\n    \t\"company\": \"Microsoft\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://3.13.86.142:3000/contacts",
+							"protocol": "http",
+							"host": [
+								"3",
+								"13",
+								"86",
+								"142"
+							],
+							"port": "3000",
+							"path": [
+								"contacts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Requestwithinvalidcharacters",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Shubam\",\r\n    \"lastName\": \"786\",\r\n    \"email\": \"asmith@thinkingtester.com\",\r\n    \"location\": {\r\n        \"city\": \"Boston, MA\",\r\n        \"country\": \"USA\"\r\n    },\r\n    \"employer\": {\r\n    \t\"jobTitle\": \"Software Tester\",\r\n    \t\"company\": \"Microsoft\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://3.13.86.142:3000/contacts",
+							"protocol": "http",
+							"host": [
+								"3",
+								"13",
+								"86",
+								"142"
+							],
+							"port": "3000",
+							"path": [
+								"contacts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Requestwhichsaysnotincorrectformat",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Shubam\",\r\n    \"lastName\": \"Smith\",\r\n    \"email\": \"@thinkingtester.com\",\r\n    \"location\": {\r\n        \"city\": \"Boston, MA\",\r\n        \"country\": \"USA\"\r\n    },\r\n    \"employer\": {\r\n    \t\"jobTitle\": \"Software Tester\",\r\n    \t\"company\": \"Microsoft\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://3.13.86.142:3000/contacts",
+							"protocol": "http",
+							"host": [
+								"3",
+								"13",
+								"86",
+								"142"
+							],
+							"port": "3000",
+							"path": [
+								"contacts"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Scenarios Tested in Negative Testing\r\n\r\n1. Record not found\r\n2. Request is sent with missing required information\r\n3. Value has too many characters\r\n4. Value has invalid characters\r\n5. Value is not in the correct format",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Response time is less than 25000ms\", function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(25000);",
+					"});"
+				]
+			}
+		}
+	]
+}
