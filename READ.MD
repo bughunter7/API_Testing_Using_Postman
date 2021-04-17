@@ -13,15 +13,18 @@ newman run CONTACTAPI.postman_collection.json -e CONTACTAPI.postman_environment.
 ```
 
 # Installing Reporter Package for generating simple and advance HTML reports
-
+```
 install -g newman-reporter-html      ( simple reports without formatting )
-
+```
+```
 install -g newman-reporter-htmlextra ( advance html reports with formatting )
-
+```
 # Execution of testcase for report generation
-
+```
 newman run CONTACTAPI.postman_collection.json -e CONTACTAPI.postman_environment.json -r html    ( simple html report is generated with folder name newman )
+```
 
+```
 newman run CONTACTAPI.postman_collection.json -e CONTACTAPI.postman_environment.json -r htmlextra  ( advance html report is generated with folder name newman )
-
+```
 
