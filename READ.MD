@@ -1,45 +1,30 @@
-usage: git [--version] [--help] [-C <path>] [-c <name>=<value>]
-           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
-           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]
-           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
-           <command> [<args>]
+# API Testing Using Postman
+This Project Demonstrates API Testing . API tested in this project includes different HTTP request create , update, delete , get , post . test can be executed using postman collection runner and newman
 
-These are common Git commands used in various situations:
+# Prerequisite
 
-start a working area (see also: git help tutorial)
-   clone             Clone a repository into a new directory
-   init              Create an empty Git repository or reinitialize an existing one
+1. Node.js installed
+2. Newman Package installed
 
-work on the current change (see also: git help everyday)
-   add               Add file contents to the index
-   mv                Move or rename a file, a directory, or a symlink
-   restore           Restore working tree files
-   rm                Remove files from the working tree and from the index
-   sparse-checkout   Initialize and modify the sparse-checkout
+# Command to execute testcase using cmd
 
-examine the history and state (see also: git help revisions)
-   bisect            Use binary search to find the commit that introduced a bug
-   diff              Show changes between commits, commit and working tree, etc
-   grep              Print lines matching a pattern
-   log               Show commit logs
-   show              Show various types of objects
-   status            Show the working tree status
+```
+newman run CONTACTAPI.postman_collection.json -e CONTACTAPI.postman_environment.json
+```
 
-grow, mark and tweak your common history
-   branch            List, create, or delete branches
-   commit            Record changes to the repository
-   merge             Join two or more development histories together
-   rebase            Reapply commits on top of another base tip
-   reset             Reset current HEAD to the specified state
-   switch            Switch branches
-   tag               Create, list, delete or verify a tag object signed with GPG
+# Installing Reporter Package for generating simple and advance HTML reports
+```
+install -g newman-reporter-html      ( simple reports without formatting )
+```
+```
+install -g newman-reporter-htmlextra ( advance html reports with formatting )
+```
+# Execution of testcase for report generation
+```
+newman run CONTACTAPI.postman_collection.json -e CONTACTAPI.postman_environment.json -r html    ( simple html report is generated with folder name newman )
+```
 
-collaborate (see also: git help workflows)
-   fetch             Download objects and refs from another repository
-   pull              Fetch from and integrate with another repository or a local branch
-   push              Update remote refs along with associated objects
+```
+newman run CONTACTAPI.postman_collection.json -e CONTACTAPI.postman_environment.json -r htmlextra  ( advance html report is generated with folder name newman )
+```
 
-'git help -a' and 'git help -g' list available subcommands and some
-concept guides. See 'git help <command>' or 'git help <concept>'
-to read about a specific subcommand or concept.
-See 'git help git' for an overview of the system.
